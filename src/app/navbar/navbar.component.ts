@@ -26,10 +26,10 @@ export class NavbarComponent implements OnInit {
   }
   login() {
     this.afAuth.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider());
-    console.log(this.user);
   }
 
   logout() {
     this.afAuth.auth.signOut();
+    this.user = null;
   }
 }

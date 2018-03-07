@@ -1,8 +1,22 @@
 <mat-toolbar color="primary">
-  <span>Liste</span>
+  <span  *ngIf="!user">Connectez-vous !!</span>
+  <span  *ngIf="user">Listes pour {{user.displayName}}</span>
   <span class="toolbar-filler"></span>
-  <img *ngIf="user; else loginButton"src={{user.providerData[0].photoURL}} alt="" class="nav-bar-user-picture">
+  <img
+    *ngIf="user; else loginButton"
+    src={{user.providerData[0].photoURL}}
+    alt="profile pic"
+    class="nav-bar-user-picture"
+    [matMenuTriggerFor]="userMenu"
+    [matMenuTriggerData]="{name: user.displayName}">
   <ng-template #loginButton>
     <button color="accent" mat-raised-button (click)="login()">Login</button>
   </ng-template>
+  <mat-menu #userMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+    <ng-template matMenuContent let-name="name">
+      <button mat-menu-item (click)="logout()">
+        logout {{name}}
+      </button>
+    </ng-template>
+  </mat-menu>
 </mat-toolbar>
