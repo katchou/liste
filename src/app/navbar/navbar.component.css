@@ -1,0 +1,8 @@
+.toolbar-filler {
+  flex: 1 1 auto;
+}
+.nav-bar-user-picture {
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+}

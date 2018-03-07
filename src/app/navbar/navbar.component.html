@@ -1,0 +1,8 @@
+<mat-toolbar color="primary">
+  <span>Liste</span>
+  <span class="toolbar-filler"></span>
+  <img *ngIf="user; else loginButton"src={{user.providerData[0].photoURL}} alt="" class="nav-bar-user-picture">
+  <ng-template #loginButton>
+    <button color="accent" mat-raised-button (click)="login()">Login</button>
+  </ng-template>
+</mat-toolbar>
