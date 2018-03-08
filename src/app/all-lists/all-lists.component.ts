@@ -1,12 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { NewListDialogComponent } from '../new-list-dialog/new-list-dialog.component';
-import { List } from '../list.class';
-
-const lists = [
-    {name: "courses"},
-    {name: "pied"}
-]
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import * as actions from '../list/list.actions';
+import * as fromList from '../list/list.reducer';
+import { List } from '../list/list.model';
 
 @Component({
   selector: 'app-all-lists',
@@ -14,28 +13,31 @@ const lists = [
   styleUrls: ['./all-lists.component.css']
 })
 export class AllListsComponent implements OnInit {
-  lists;
 
-  newList =  new List();
+  lists : Observable<any>;
 
-  constructor(public dialog: MatDialog) {
-    this.lists = lists;
-  }
+  constructor(
+    public dialog: MatDialog,
+    private store: Store<fromList.State>
+  ) {}
 
   ngOnInit() {
+    this.lists = this.store.select(fromList.selectAll);
+    this.store.dispatch( new actions.Query());
   }
 
-  addList(): void {
+  createList(): void {
     const dialogRef = this.dialog.open(NewListDialogComponent, {
       width: '250px',
-      data: { list: this.newList }
+      data: { list: <List>{} }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (this.newList.name != '') {
-      console.log(this.newList);
-        this.newList = new List();
+      const list: List = {
+        id: new Date().getUTCMilliseconds().toString(),
+        name: result.name
       }
+      this.store.dispatch(new actions.Create(list));
     });
   }
 }

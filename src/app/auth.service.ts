@@ -26,13 +26,13 @@ export class AuthService {
               private router: Router) {
 
       this.user = this.afAuth.authState
-        // .switchMap(user => {
-        //   if (user) {
-        //     return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
-        //   } else {
-        //     return Observable.of(null)
-        //   }
-        // })
+        .switchMap(user => {
+          if (user) {
+            return this.afs.doc<User>(`users/${user.uid}`).valueChanges()
+          } else {
+            return Observable.of(null)
+          }
+        })
   }
 
 
@@ -42,7 +42,7 @@ export class AuthService {
       return this.oAuthLogin(provider);
     }
 
-    facebooklogin() {
+    facebookLogin() {
         const provider = new firebase.auth.FacebookAuthProvider()
         return this.oAuthLogin(provider);
     }
@@ -64,7 +64,7 @@ export class AuthService {
         uid: user.uid,
         email: user.email,
         displayName: user.displayName,
-        photoURL: user.photoURL
+        photoURL: user.photoURL // facebook (and google) photoURL is WRONG, need some workaround
       }
 
       return userRef.set(data, { merge: true })

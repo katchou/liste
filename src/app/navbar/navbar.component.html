@@ -4,7 +4,22 @@
   <mat-toolbar color="primary">
     <span>Connectez-vous !!</span>
     <span class="toolbar-filler"></span>
-    <button color="accent" mat-raised-button (click)="auth.facebooklogin()">Login</button>
+    <button
+      mat-raised-button
+      color="accent"
+      [matMenuTriggerFor]="loginMenu">
+      Login
+    </button>
+    <mat-menu #loginMenu="matMenu" yPosition="below" [overlapTrigger]="false">
+      <ng-template matMenuContent let-name="name">
+        <button mat-menu-item (click)="auth.facebookLogin()">
+          facebook
+        </button>
+        <button mat-menu-item (click)="auth.googleLogin()">
+          google
+        </button>
+      </ng-template>
+    </mat-menu>
   </mat-toolbar>
 </ng-template>
 

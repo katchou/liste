@@ -1,10 +1,10 @@
 <mat-grid-list cols="6">
   <mat-grid-tile>
-    <button mat-raised-button class="add-list-button" aria-label="nouvelle list" (click)="addList()">
+    <button mat-raised-button class="add-list-button" aria-label="nouvelle list" (click)="createList()">
       <mat-icon color="accent" class="add-list-icon" aria-hidden="true">add</mat-icon>
     </button>
   </mat-grid-tile>
-  <mat-grid-tile *ngFor="let list of lists">
+  <mat-grid-tile *ngFor="let list of lists | async">
     <a mat-raised-button >
       {{ list.name }}
     </a>
