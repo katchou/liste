@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { MaterialComponentsModule } from './material-components.module';
@@ -12,7 +11,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AppRoutingModule } from './app-routing.module';
-import { NewListDialogComponent } from './new-list-dialog/new-list-dialog.component';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { ListModule } from './list/list.module';
@@ -25,7 +23,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
   declarations: [
     AppComponent,
     NavbarComponent,
-    NewListDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -36,14 +33,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     AngularFirestoreModule,
     EffectsModule.forRoot([]),
     AppRoutingModule,
-    FormsModule,
     ListModule,
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({maxAge: 25})
 
   ],
   providers: [AuthService, AuthGuard],
-  bootstrap: [AppComponent],
-  entryComponents: [NewListDialogComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

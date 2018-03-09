@@ -8,9 +8,9 @@ import 'rxjs/add/operator/withLatestFrom';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AuthService, User } from '../auth.service';
 
-import * as actions from './list.actions';
-import * as fromList from './list.reducer';
-import { List } from './list.model';
+import * as actions from './all-lists.actions';
+import * as fromList from './all-lists.reducer';
+import { List } from '../list/list.model';
 
 @Injectable()
 export class ListEffects {
@@ -51,23 +51,23 @@ export class ListEffects {
       return new actions.Success();
     });
 
-  @Effect() update$: Observable<Action> = this.actions$.ofType(actions.UPDATE)
-    .map((action: actions.Update) => action)
-    .switchMap(data => {
-      const ref = this.afs.doc<List>(`lists/${data.id}`);
-      return Observable.fromPromise(ref.update(data.changes))
-    })
-    .map(() => {{
-      return new actions.Success();
-    }})
-
-  @Effect() delete$: Observable<Action> = this.actions$.ofType(actions.DELETE)
-    .map((action: actions.Delete) => action.id)
-    .switchMap(id => {
-      const ref = this.afs.doc<List>(`lists/${id}`);
-      return Observable.fromPromise(ref.delete())
-    })
-    .map(() => {
-      return new actions.Success();
-    })
+  // @Effect() update$: Observable<Action> = this.actions$.ofType(actions.UPDATE)
+  //   .map((action: actions.Update) => action)
+  //   .switchMap(data => {
+  //     const ref = this.afs.doc<List>(`lists/${data.id}`);
+  //     return Observable.fromPromise(ref.update(data.changes))
+  //   })
+  //   .map(() => {{
+  //     return new actions.Success();
+  //   }})
+  //
+  // @Effect() delete$: Observable<Action> = this.actions$.ofType(actions.DELETE)
+  //   .map((action: actions.Delete) => action.id)
+  //   .switchMap(id => {
+  //     const ref = this.afs.doc<List>(`lists/${id}`);
+  //     return Observable.fromPromise(ref.delete())
+  //   })
+  //   .map(() => {
+  //     return new actions.Success();
+  //   })
 }

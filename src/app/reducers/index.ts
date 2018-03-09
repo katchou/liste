@@ -1,6 +1,6 @@
 import { ActionReducerMap } from '@ngrx/store';
-import { listReducer } from '../list/list.reducer';
+import { allListsReducer } from '../all-lists/all-lists.reducer';
 
 export const reducers: ActionReducerMap<any> = {
-  list: listReducer
+  allLists: allListsReducer
 }

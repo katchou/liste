@@ -1,5 +1,5 @@
-import * as actions from './list.actions';
-import { List } from './list.model';
+import * as actions from './all-lists.actions';
+import { List } from '../list/list.model';
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createFeatureSelector } from '@ngrx/store';
 
@@ -8,7 +8,7 @@ export interface State extends EntityState<List> {};
 
 export const initialState: State = listAdapter.getInitialState();
 
-export function listReducer(
+export function allListsReducer(
   state: State = initialState,
   action: actions.ListActions
 ) {

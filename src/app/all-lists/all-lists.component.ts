@@ -3,8 +3,8 @@ import { MatDialog } from '@angular/material';
 import { NewListDialogComponent } from '../new-list-dialog/new-list-dialog.component';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import * as actions from '../list/list.actions';
-import * as fromList from '../list/list.reducer';
+import * as actions from './all-lists.actions';
+import * as fromList from './all-lists.reducer';
 import { List } from '../list/list.model';
 
 @Component({
