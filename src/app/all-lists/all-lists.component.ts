@@ -34,7 +34,6 @@ export class AllListsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       const list: List = {
-        id: new Date().getUTCMilliseconds().toString(),
         name: result.name
       }
       this.store.dispatch(new actions.Create(list));

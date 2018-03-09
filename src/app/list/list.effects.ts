@@ -4,7 +4,9 @@ import { Actions, Effect } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/withLatestFrom';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AuthService, User } from '../auth.service';
 
 import * as actions from './list.actions';
 import * as fromList from './list.reducer';
@@ -12,11 +14,18 @@ import { List } from './list.model';
 
 @Injectable()
 export class ListEffects {
-  constructor(private actions$: Actions, private afs: AngularFirestore) {}
+  constructor(
+    private actions$: Actions,
+    private afs: AngularFirestore,
+    private auth: AuthService
+) {}
 
   @Effect() query$: Observable<Action> = this.actions$.ofType(actions.QUERY)
     .switchMap(action => {
-      const ref = this.afs.collection<List>('lists');
+      return this.auth.user;
+    })
+    .switchMap(user => {
+      const ref = this.afs.collection<List>(`users/${user.uid}/lists`);
       return ref.snapshotChanges().map(arr => {
         return arr.map(doc => {
           const data = doc.payload.doc.data();
@@ -31,9 +40,12 @@ export class ListEffects {
 
   @Effect() create$: Observable<Action> = this.actions$.ofType(actions.CREATE)
     .map((action: actions.Create) => action.list)
-    .switchMap(list => {
-      const ref = this.afs.doc<List>(`lists/${list.id}`)
-      return Observable.fromPromise(ref.set(list))
+    .withLatestFrom(this.auth.user, (list: List, user: User) => {
+      return {list:list, user:user};
+    })
+    .switchMap(value => {
+      const ref = this.afs.collection<List>(`users/${value.user.uid}/lists`)
+      return Observable.fromPromise(ref.add(value.list))
     })
     .map(() => {
       return new actions.Success();

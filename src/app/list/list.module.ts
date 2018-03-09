@@ -6,6 +6,7 @@ import { listReducer } from './list.reducer';
 import { MaterialComponentsModule } from '../material-components.module';
 import { EffectsModule } from '@ngrx/effects';
 import { ListEffects } from './list.effects';
+import { ListDetailComponent } from '../list-detail/list-detail.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -14,6 +15,6 @@ import { ListEffects } from './list.effects';
     EffectsModule.forFeature([ListEffects])
   ],
   exports: [AllListsComponent],
-  declarations: [AllListsComponent]
+  declarations: [AllListsComponent, ListDetailComponent]
 })
 export class ListModule { }
